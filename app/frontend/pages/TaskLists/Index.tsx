@@ -22,11 +22,10 @@ export default function InertiaExample({ task_lists }: { task_lists: TaskList[] 
       }
     })
   }
-
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this task list?')) {
       destroy(`/task-lists/${id}`, {
-        onSuccess: (page: any) => {
+        onSuccess: (page) => {
           setTasks(page.props.task_lists as TaskList[])
         }
       })
