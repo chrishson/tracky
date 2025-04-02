@@ -1,14 +1,26 @@
 import { Head, useForm } from '@inertiajs/react'
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function InertiaExample({ task_lists }: { task_lists: [] }) {
-  const { data, setData, post, processing, errors } = useForm({
+type TaskList = {
+  id: number,
+  name: string
+}
+
+export default function InertiaExample({ task_lists }: { task_lists: TaskList[] }) {
+  const { data, setData, post, processing, errors, reset } = useForm({
     name: ''
   })
 
+  const [tasks, setTasks] = useState(task_lists)
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    post('/task-lists')
+    post('/task-lists', {
+      onSuccess: (page) => {
+        setTasks(page.props.task_lists as TaskList[])
+        reset()
+      }
+    })
   }
 
   const handleDelete = (id: number) => {
@@ -20,7 +32,7 @@ export default function InertiaExample({ task_lists }: { task_lists: [] }) {
           'Content-Type': 'application/json'
         }
       }).then(() => {
-        window.location.reload()
+        setTasks(tasks.filter(task => task.id !== id))
       })
     }
   }
@@ -49,7 +61,7 @@ export default function InertiaExample({ task_lists }: { task_lists: [] }) {
         </form>
         
         <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          {task_lists.map((task_list: any) => (
+          {tasks.map((task_list: any) => (
             <li key={task_list.id} className="border-b border-gray-200 py-2 flex justify-between items-center">
               {task_list.name}
               <button
