@@ -7,7 +7,7 @@ type TaskList = {
 }
 
 export default function InertiaExample({ task_lists }: { task_lists: TaskList[] }) {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
     name: ''
   })
 
@@ -25,14 +25,10 @@ export default function InertiaExample({ task_lists }: { task_lists: TaskList[] 
 
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this task list?')) {
-      fetch(`/task-lists/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-Token': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-          'Content-Type': 'application/json'
+      destroy(`/task-lists/${id}`, {
+        onSuccess: (page: any) => {
+          setTasks(page.props.task_lists as TaskList[])
         }
-      }).then(() => {
-        setTasks(tasks.filter(task => task.id !== id))
       })
     }
   }
@@ -61,7 +57,7 @@ export default function InertiaExample({ task_lists }: { task_lists: TaskList[] 
         </form>
         
         <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          {tasks.map((task_list: any) => (
+          {tasks.map((task_list: TaskList) => (
             <li key={task_list.id} className="border-b border-gray-200 py-2 flex justify-between items-center">
               {task_list.name}
               <button
