@@ -7,7 +7,7 @@
 
 ## Running this Project
 - bundle install
+- rails db:migrate
 - overmind start -f Procfile.dev
 
-- http://localhost:5100/ for main rails test page
-- http://localhost:5100/inertia-example for react test page
+- http://localhost:5100/task-lists
