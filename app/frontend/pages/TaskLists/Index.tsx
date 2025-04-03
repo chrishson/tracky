@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm, Link } from '@inertiajs/react'
 import React, { useState } from 'react'
 
 type TaskList = {
@@ -6,7 +6,7 @@ type TaskList = {
   name: string
 }
 
-export default function InertiaExample({ task_lists }: { task_lists: TaskList[] }) {
+export default function TaskListsIndex({ task_lists }: { task_lists: TaskList[] }) {
   const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
     name: ''
   })
@@ -54,11 +54,16 @@ export default function InertiaExample({ task_lists }: { task_lists: TaskList[] 
             </button>
           </div>
         </form>
-        
+
         <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           {tasks.map((task_list: TaskList) => (
             <li key={task_list.id} className="border-b border-gray-200 py-2 flex justify-between items-center">
-              {task_list.name}
+              <Link
+                href={`/task-lists/${task_list.id}`}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              >
+                {`${task_list.name}`}
+              </Link>
               <button
                 onClick={() => handleDelete(task_list.id)}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
