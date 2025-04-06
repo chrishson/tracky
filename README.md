@@ -1,9 +1,11 @@
 # README
 
 ## Prerequisites
-- using 3.4.2 (can use a ruby version manager like rbenv)
+- using Rbuy 3.4.2 (can use a ruby version manager like rbenv)
+- `gem install rails`
 - brew install tmux
 - brew install overmind
+    - the server (better than puma)
 
 ## Running this Project
 - bundle install
