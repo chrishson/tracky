@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_02_212546) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_14_040551) do
   create_table "task_lists", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -24,6 +24,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_02_212546) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "tasks", "task_lists"
