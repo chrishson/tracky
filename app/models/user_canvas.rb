@@ -1,3 +1,2 @@
 class UserCanvas < ApplicationRecord
-
 end

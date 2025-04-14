@@ -1,4 +1,3 @@
 class Canvas < ApplicationRecord
-
 end
 
