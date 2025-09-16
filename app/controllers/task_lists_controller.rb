@@ -6,7 +6,7 @@ class TaskListsController < ApplicationController
   end
 
   def show
-    task_list = TaskList.find(params[:id])
+    task_list = TaskList.includes(:tasks).find(params[:id])
     render inertia: 'TaskLists/Show', props: {
       task_list: task_list.slice(:id, :name),
       tasks: task_list.tasks.map { |task| task.slice(:id, :name, :completed) },
